@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
+import { FuncionarioListComponent } from './components/funcionarios/funcionario-list/funcionario-list.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/funcionarios', pathMatch: 'full' },
-  { path: 'funcionarios', loadComponent: () => import('./components/funcionarios/funcionario-list/funcionario-list.component').then(m => m.FuncionarioListComponent) },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, pathMatch:'full' }, // Rota inicial
+  { path: 'funcionarios', component: FuncionarioListComponent, pathMatch:'full' },
 ];

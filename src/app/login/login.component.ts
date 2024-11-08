@@ -25,9 +25,8 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     console.log(this.editForm);
     if (this.editForm.controls['username'].value === 'admin' && this.editForm.controls['password'].value === 'admin') {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/funcionarios']);
     } else {
-      console.log("teste");
       alert('Credenciais inválidas');
     }
   }
