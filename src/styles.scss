@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+.custom-toast {
+    background-color: #4a4a4a;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 9999; /* Ajuste para aparecer sobre outros elementos */
+  }
+  
+  #toast-container {
+    position: fixed !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 9999 !important;
+  }
+  
+  #toast-container > div {
+    z-index: 9999 !important;
+  }
+  

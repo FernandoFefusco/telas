@@ -1,0 +1,53 @@
+<div class="container mt-5">
+  <div class="row">
+    <!-- Card de Funcionários -->
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Funcionários</span>
+          <i class="bi bi-plus-circle text-success" (click)="addFuncionario()" style="cursor: pointer;"></i>
+        </div>
+        <div class="card-body overflow-auto" style="max-height: 200px;">
+          <app-funcionarios></app-funcionarios>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card de Clientes -->
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          Clientes
+        </div>
+        <div class="card-body overflow-auto" style="max-height: 200px;">
+          <app-clientes></app-clientes>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card de Vendas -->
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          Vendas
+        </div>
+        <div class="card-body overflow-auto" style="max-height: 200px;">
+          <app-vendas></app-vendas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card de Serviços -->
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          Serviços
+        </div>
+        <div class="card-body overflow-auto" style="max-height: 1000px;">
+          <app-servicos></app-servicos>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

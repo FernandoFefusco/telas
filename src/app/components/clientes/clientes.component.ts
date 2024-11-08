@@ -1,4 +1,5 @@
 // src/app/vendas/venda-list/venda-list.component.ts
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 interface Venda {
@@ -8,10 +9,12 @@ interface Venda {
 }
 
 @Component({
-  selector: 'app-venda-list',
-  templateUrl: './venda-list.component.html',
+  selector: 'app-clientes',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './clientes.component.html',
 })
-export class VendaListComponent implements OnInit {
+export class ClientesComponent implements OnInit {
   vendas: Venda[] = [
     { id: 1, data: '2023-11-07', valor: 100.0 },
     { id: 2, data: '2023-11-06', valor: 200.0 }

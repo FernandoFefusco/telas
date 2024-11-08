@@ -17,4 +17,16 @@ export class FuncionarioService {
     return this.http.get<Funcionario[]>(this.apiUrl).pipe();
   }
 
+  updateFuncionario(idUser: number, funcionario: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${idUser}`, funcionario);
+  }
+
+  deleteFuncionario(idUser: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${idUser}`);
+  }
+
+  createFuncionario(funcionario: any): Observable<any> {
+    return this.http.post(this.apiUrl, funcionario);
+  }
+
 }
