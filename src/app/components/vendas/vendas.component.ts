@@ -1,12 +1,11 @@
 // src/app/vendas/venda-list/venda-list.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-
-interface Venda {
-  id: number;
-  data: string;
-  valor: number;
-}
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { Venda } from '../../models/vendas.models';
+import { VendaService } from '../../services/venda.service';
+import { VendaDetailsComponent } from './vendas-details.component';
 
 @Component({
   selector: 'app-vendas',
@@ -15,12 +14,43 @@ interface Venda {
   templateUrl: './vendas.component.html',
 })
 export class VendasComponent implements OnInit {
-  vendas: Venda[] = [
-    { id: 1, data: '2023-11-07', valor: 100.0 },
-    { id: 2, data: '2023-11-06', valor: 200.0 }
-  ];
 
-  constructor() {}
+  vendas: Venda[] = [];
 
-  ngOnInit(): void {}
+  constructor(
+    private vendaService: VendaService, 
+    private modalService: NgbModal,
+    private toastr: ToastrService
+  ) {}
+
+  ngOnInit() {
+    this.listar();
+  }
+
+  listar(){
+    this.vendaService.getVendas().subscribe((res: Venda[]) => {
+      this.vendas = res;
+    });
+  }
+
+  excluir(venda: Venda){
+    this.vendaService.deleteVenda(venda.idVenda).subscribe(
+      (response) => {
+        this.toastr.success('Venda excluido com sucesso!', 'Sucesso');
+        this.listar();
+      },
+      (error) => {
+        console.error('Erro ao excluir a venda:', error);
+        this.toastr.error('Ocorreu um erro ao excluir a venda.', 'Erro');
+      }
+    );
+  }
+
+  openModal(venda: Venda) {
+    const modalRef = this.modalService.open(VendaDetailsComponent);
+    modalRef.componentInstance.vendaSelecionado = venda;
+    modalRef.componentInstance.vendaAtualizado.subscribe(() => {
+      this.listar();
+    });
+  }
 }

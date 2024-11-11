@@ -1,12 +1,12 @@
 // src/app/produtos/produto-list/produto-list.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Servico } from '../../models/servico.models';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { ServicoService } from '../../services/servico.service';
+import { ServicoDetailsComponent } from './servicos-details.component';
 
-interface Produto {
-  id: number;
-  nome: string;
-  preco: number;
-}
 
 @Component({
   selector: 'app-servicos',
@@ -15,12 +15,44 @@ interface Produto {
   templateUrl: './servicos.component.html',
 })
 export class ServicosComponent implements OnInit {
-  produtos: Produto[] = [
-    { id: 1, nome: 'Shampoo', preco: 25.0 },
-    { id: 2, nome: 'Gel para cabelo', preco: 15.0 }
-  ];
 
-  constructor() {}
+  servicos: Servico[] = [];
 
-  ngOnInit(): void {}
+  constructor(
+    private servicoService: ServicoService, 
+    private modalService: NgbModal,
+    private toastr: ToastrService
+  ) {}
+
+  ngOnInit() {
+    this.listar();
+  }
+
+  listar(){
+    this.servicoService.getServicos().subscribe((res: Servico[]) => {
+      this.servicos = res;
+    });
+  }
+
+  excluir(servico: Servico){
+    this.servicoService.deleteServico(servico.idServico).subscribe(
+      (response) => {
+        this.toastr.success('Servico excluido com sucesso!', 'Sucesso');
+        this.listar();
+      },
+      (error) => {
+        console.error('Erro ao excluir o servico:', error);
+        this.toastr.error('Ocorreu um erro ao excluir o servico.', 'Erro');
+      }
+    );
+  }
+
+  openModal(servico: Servico) {
+    const modalRef = this.modalService.open(ServicoDetailsComponent);
+    modalRef.componentInstance.servicoSelecionado = servico;
+    modalRef.componentInstance.servicoAtualizado.subscribe(() => {
+      this.listar();
+    });
+  }
+
 }

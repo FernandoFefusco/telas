@@ -21,7 +21,6 @@ export class FuncionarioComponent implements OnInit {
   constructor(
     private funcionarioService: FuncionarioService, 
     private modalService: NgbModal,
-    private funcionariosService: FuncionarioService, 
     private toastr: ToastrService,
   ) {}
 
@@ -36,7 +35,7 @@ export class FuncionarioComponent implements OnInit {
   }
 
   excluir(funcionario: Funcionario){
-    this.funcionariosService.deleteFuncionario(funcionario.idUser).subscribe(
+    this.funcionarioService.deleteFuncionario(funcionario.idUser).subscribe(
       (response) => {
         this.toastr.success('Funcionário excluido com sucesso!', 'Sucesso');
         this.listar();

@@ -1,26 +1,57 @@
 // src/app/vendas/venda-list/venda-list.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-
-interface Venda {
-  id: number;
-  data: string;
-  valor: number;
-}
+import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ClienteService } from '../../services/cliente.service';
+import { ToastrService } from 'ngx-toastr';
+import { Cliente } from '../../models/cliente.models';
+import { ClienteDetailsComponent } from './clientes-details.component';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgbModalModule  ],
   templateUrl: './clientes.component.html',
 })
 export class ClientesComponent implements OnInit {
-  vendas: Venda[] = [
-    { id: 1, data: '2023-11-07', valor: 100.0 },
-    { id: 2, data: '2023-11-06', valor: 200.0 }
-  ];
 
-  constructor() {}
+  constructor(
+    private clienteService: ClienteService, 
+    private modalService: NgbModal,
+    private toastr: ToastrService
+  ) {}
 
-  ngOnInit(): void {}
+  clientes: Cliente[] = [];
+
+  ngOnInit() {
+    this.listar();
+  }
+
+  listar(){
+    this.clienteService.getClientes().subscribe((res: Cliente[]) => {
+      this.clientes = res;
+    });
+  }
+
+  excluir(cliente: Cliente){
+    this.clienteService.deleteCliente(cliente.idUser).subscribe(
+      (response) => {
+        this.toastr.success('Cliente excluido com sucesso!', 'Sucesso');
+        this.listar();
+      },
+      (error) => {
+        console.error('Erro ao excluir o cliente:', error);
+        this.toastr.error('Ocorreu um erro ao excluir o cliente.', 'Erro');
+      }
+    );
+  }
+
+  openModal(cliente: Cliente) {
+    const modalRef = this.modalService.open(ClienteDetailsComponent);
+    modalRef.componentInstance.clienteSelecionado = cliente;
+    modalRef.componentInstance.clienteAtualizado.subscribe(() => {
+      this.listar();
+    });
+  }
+
 }

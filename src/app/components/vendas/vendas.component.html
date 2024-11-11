@@ -1,5 +1,11 @@
-    <ul class="list-group">
-      <li class="list-group-item">Venda 1</li>
-      <li class="list-group-item">Venda 2</li>
-      <li class="list-group-item">Venda 3</li>
-    </ul>
+<ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let venda of vendas">
+    <div>
+      {{ venda.idVenda }}
+    </div>
+    <div>
+      <i class="bi bi-pencil text-primary me-3" (click)="openModal(venda)" style="cursor: pointer;"></i>
+      <i class="bi bi-trash text-danger" (click)="excluir(venda)" style="cursor: pointer;"></i>
+    </div>
+  </li>
+</ul>
