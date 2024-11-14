@@ -1,1 +1,29 @@
-<router-outlet />
+<div class="container-fluid">
+  <!-- Navbar com um ícone -->
+  <img src="../../assets/logo.png" alt="Logo" class="logo mt-1"
+       style="position: absolute; top: 10px; right: 10px; width: 50px; border-radius: 50%;" />
+
+  <!-- Conteúdo principal com o Menu Lateral -->
+  <div class="row">
+    <!-- Menu Lateral -->
+    <div class="col-md-3 col-lg-2 p-0 bg-light" *ngIf="!isLoginPage">
+      <div class="d-flex flex-column">
+        <div class="p-3">
+          <h5>Menu</h5>
+        </div>
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action" routerLink="/clientes" routerLinkActive="active">Clientes</a>
+          <a class="list-group-item list-group-item-action" routerLink="/funcionarios" routerLinkActive="active">Funcionários</a>
+          <a class="list-group-item list-group-item-action" routerLink="/servicos" routerLinkActive="active">Serviços</a>
+          <a class="list-group-item list-group-item-action" routerLink="/vendas" routerLinkActive="active">Vendas</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <div [ngClass]="{'col-md-12': isLoginPage, 'col-md-8': !isLoginPage}">
+      <router-outlet></router-outlet>
+      <!-- Aqui vai o conteúdo das páginas -->
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-funcionarios-add',
@@ -23,6 +24,7 @@ export class FuncionarioAddComponent implements OnInit{
     private funcionariosService: FuncionarioService, 
     private toastr: ToastrService,
     private formBuilder: UntypedFormBuilder,
+    private eventService: EventService
   ) { }
 
   ngOnInit() {
@@ -46,6 +48,7 @@ export class FuncionarioAddComponent implements OnInit{
     this.funcionariosService.createFuncionario(this.editForm.value).subscribe(
       (response) => {
         this.toastr.success('Funcionário criado com sucesso!', 'Sucesso');
+        this.eventService.emitEvent("");
       },
       (error) => {
         console.error('Erro ao criar o funcionário:', error);

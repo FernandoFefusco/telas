@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html', 
-  styleUrls: ['./login.component.css']  // Adicione esta linha
 })
 export class LoginComponent implements OnInit {
   editForm: UntypedFormGroup;
@@ -23,9 +22,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editForm);
     if (this.editForm.controls['username'].value === 'admin' && this.editForm.controls['password'].value === 'admin') {
-      this.router.navigate(['/funcionarios']);
+      this.router.navigate(['/home']);
     } else {
       alert('Credenciais inválidas');
     }

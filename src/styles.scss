@@ -20,3 +20,8 @@
     z-index: 9999 !important;
   }
   
+  input[readonly] {
+    pointer-events: none;  /* Impede o clique */
+    background-color: #e9ecef; /* Cinza claro */
+    color: #6c757d;  /* Cor do texto em cinza */
+  }

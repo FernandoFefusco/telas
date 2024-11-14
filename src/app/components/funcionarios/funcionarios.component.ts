@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FuncionarioDetailsComponent } from './funcionarios-details.component';
 import { ToastrService } from 'ngx-toastr';
+import { EventService } from '../../services/event.service';
 
 
 @Component({
@@ -22,10 +23,12 @@ export class FuncionarioComponent implements OnInit {
     private funcionarioService: FuncionarioService, 
     private modalService: NgbModal,
     private toastr: ToastrService,
+    private eventService: EventService
   ) {}
 
   ngOnInit(){
     this.listar();
+    this.atualizaListaDepoisQueAdicionado();
   }
 
   listar(){
@@ -51,6 +54,12 @@ export class FuncionarioComponent implements OnInit {
     const modalRef = this.modalService.open(FuncionarioDetailsComponent);
     modalRef.componentInstance.funcionarioSelecionado = funcionario;
     modalRef.componentInstance.funcionarioAtualizado.subscribe(() => {
+      this.listar();
+    });
+  }
+
+  atualizaListaDepoisQueAdicionado(){
+    this.eventService.getEvent().subscribe((data) => {
       this.listar();
     });
   }

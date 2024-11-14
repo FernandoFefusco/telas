@@ -6,6 +6,7 @@ import { ClienteService } from '../../services/cliente.service';
 import { ToastrService } from 'ngx-toastr';
 import { Cliente } from '../../models/cliente.models';
 import { ClienteDetailsComponent } from './clientes-details.component';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-clientes',
@@ -18,13 +19,15 @@ export class ClientesComponent implements OnInit {
   constructor(
     private clienteService: ClienteService, 
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private eventService: EventService
   ) {}
 
   clientes: Cliente[] = [];
 
   ngOnInit() {
     this.listar();
+
   }
 
   listar(){
@@ -44,6 +47,12 @@ export class ClientesComponent implements OnInit {
         this.toastr.error('Ocorreu um erro ao excluir o cliente.', 'Erro');
       }
     );
+  }
+
+  atualizaListaDepoisQueAdicionado(){
+    this.eventService.getEvent().subscribe((data) => {
+      this.listar();
+    });
   }
 
   openModal(cliente: Cliente) {

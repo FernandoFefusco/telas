@@ -6,20 +6,21 @@ import { VendasComponent } from '../vendas/vendas.component';
 import { ClientesComponent } from '../clientes/clientes.component';
 import { FuncionarioAddComponent } from '../funcionarios/funcionarios-add.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FuncionarioService } from '../../services/funcionario.service';
 import { ClienteAddComponent } from '../clientes/clientes-add.component';
 import { ServicoAddComponent } from '../servicos/servicos-add.component';
+import { VendaAddComponent } from '../vendas/vendas-add.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FuncionarioComponent, ServicosComponent, VendasComponent, ClientesComponent, FuncionarioAddComponent, ClienteAddComponent],
+  imports: [CommonModule, FuncionarioComponent, ServicosComponent, VendasComponent, ClientesComponent, FuncionarioAddComponent, ClienteAddComponent, ServicoAddComponent, VendaAddComponent],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit, AfterViewInit{
   @ViewChild(FuncionarioComponent) funcionarioComponent!: FuncionarioComponent;
   @ViewChild(ClientesComponent) clienteComponent!: ClientesComponent;
   @ViewChild(ServicosComponent) servicosComponent!: ServicosComponent;
+  @ViewChild(VendasComponent) vendaComponent!: VendasComponent;
 
   constructor(
     private modalService: NgbModal
@@ -44,5 +45,10 @@ export class HomeComponent implements OnInit, AfterViewInit{
   addServico() {
     const modalRef = this.modalService.open(ServicoAddComponent);
     this.servicosComponent.listar();
+  }
+
+  addVenda() {
+    const modalRef = this.modalService.open(VendaAddComponent);
+    this.vendaComponent.listar();
   }
 }

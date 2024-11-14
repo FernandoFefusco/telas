@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup 
 import { Router } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { ServicoService } from '../../services/servico.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-servicos-add',
@@ -25,6 +26,7 @@ export class ServicoAddComponent implements OnInit{
     private servicoService: ServicoService, 
     private toastr: ToastrService,
     private formBuilder: UntypedFormBuilder,
+    private eventService: EventService
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,7 @@ export class ServicoAddComponent implements OnInit{
     this.servicoService.createServico(this.editForm.value).subscribe(
       (response) => {
         this.toastr.success('servico criado com sucesso!', 'Sucesso');
+        this.eventService.emitEvent("");
       },
       (error) => {
         console.error('Erro ao criar o servico:', error);

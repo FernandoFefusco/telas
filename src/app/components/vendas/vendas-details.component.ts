@@ -29,7 +29,8 @@ export class VendaDetailsComponent implements OnInit{
   idServicos: number[] = [];
   servicos: Servico[] = [];
   selectedItems: Servico[] = [];
-  
+  totalValorPago: number = 0;
+
   constructor(
     public activeModal: NgbActiveModal, 
     private vendaService: VendaService, 
@@ -57,6 +58,7 @@ export class VendaDetailsComponent implements OnInit{
       valorPago: [this.vendaSelecionado.valorPago],
       idServico: [this.idServicos],
     });
+    this.totalValorPago = this.vendaSelecionado.valorPago;
   }
 
   listarIdServicos(){
@@ -64,7 +66,7 @@ export class VendaDetailsComponent implements OnInit{
     this.selectedItems = this.vendaSelecionado.servicos;
   }
 
-  listarIdServicosTeste(){
+  atualizaListaDeSelecionados(){
     this.idServicos = this.selectedItems.map(servico => servico.idServico);
     this.editForm.patchValue({
       idServico: this.idServicos
@@ -85,7 +87,9 @@ export class VendaDetailsComponent implements OnInit{
 
   listarServicos(){
     this.servicoService.getServicos().subscribe((res: Servico[]) => {
-      this.servicos = res;
+      this.servicos = res.filter(servico => 
+        !this.selectedItems.some(selected => selected.idServico === servico.idServico)
+      );
     });
   }
 
@@ -131,15 +135,18 @@ export class VendaDetailsComponent implements OnInit{
     this.servicos = this.servicos.filter(i => i !== item);
     // Adiciona o item à lista de selecionados
     this.selectedItems.push(item);
-    this.listarIdServicosTeste();
+    this.totalValorPago += item.preco;
+    this.editForm.patchValue({valorPago: this.totalValorPago});
+    this.atualizaListaDeSelecionados();
   }
 
   removeFromSelected(item: any) {
     // Remove o item da lista de selecionados
     this.selectedItems = this.selectedItems.filter(i => i !== item);
-    this.idServicos = this.idServicos.filter(i => i !== item);
     // Adiciona o item de volta à lista de disponíveis
     this.servicos.push(item);
-    this.listarIdServicosTeste();
+    this.totalValorPago = Math.max(0, this.totalValorPago - item.preco);
+    this.editForm.patchValue({valorPago: this.totalValorPago});
+    this.atualizaListaDeSelecionados();
   }
 }

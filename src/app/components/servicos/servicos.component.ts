@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ServicoService } from '../../services/servico.service';
 import { ServicoDetailsComponent } from './servicos-details.component';
+import { EventService } from '../../services/event.service';
 
 
 @Component({
@@ -21,11 +22,14 @@ export class ServicosComponent implements OnInit {
   constructor(
     private servicoService: ServicoService, 
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private eventService: EventService
+
   ) {}
 
   ngOnInit() {
     this.listar();
+    this.atualizaListaDepoisQueAdicionado();
   }
 
   listar(){
@@ -51,6 +55,12 @@ export class ServicosComponent implements OnInit {
     const modalRef = this.modalService.open(ServicoDetailsComponent);
     modalRef.componentInstance.servicoSelecionado = servico;
     modalRef.componentInstance.servicoAtualizado.subscribe(() => {
+      this.listar();
+    });
+  }
+  
+  atualizaListaDepoisQueAdicionado(){
+    this.eventService.getEvent().subscribe((data) => {
       this.listar();
     });
   }

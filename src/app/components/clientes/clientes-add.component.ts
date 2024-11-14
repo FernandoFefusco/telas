@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-clientes-add',
@@ -24,6 +25,7 @@ export class ClienteAddComponent implements OnInit{
     private clienteService: ClienteService, 
     private toastr: ToastrService,
     private formBuilder: UntypedFormBuilder,
+    private eventService: EventService
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,7 @@ export class ClienteAddComponent implements OnInit{
     this.clienteService.createCliente(this.editForm.value).subscribe(
       (response) => {
         this.toastr.success('Cliente criado com sucesso!', 'Sucesso');
+        this.eventService.emitEvent("");
       },
       (error) => {
         console.error('Erro ao criar o cliente:', error);

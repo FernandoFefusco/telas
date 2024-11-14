@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Venda } from '../../models/vendas.models';
 import { VendaService } from '../../services/venda.service';
 import { VendaDetailsComponent } from './vendas-details.component';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-vendas',
@@ -20,11 +21,13 @@ export class VendasComponent implements OnInit {
   constructor(
     private vendaService: VendaService, 
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private eventService: EventService
   ) {}
 
   ngOnInit() {
     this.listar();
+    this.atualizaListaDepoisQueAdicionado();
   }
 
   listar(){
@@ -53,4 +56,11 @@ export class VendasComponent implements OnInit {
       this.listar();
     });
   }
+  
+  atualizaListaDepoisQueAdicionado(){
+    this.eventService.getEvent().subscribe((data) => {
+      this.listar();
+    });
+  }
+
 }
