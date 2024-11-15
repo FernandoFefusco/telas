@@ -1,12 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { Funcionario } from '../../models/funcionario.models';
 import { CommonModule } from '@angular/common';
-import { FuncionarioService } from '../../services/funcionario.service';
 import { ToastrService } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { EventService } from '../../services/event.service';
 

@@ -27,7 +27,7 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit() {
     this.listar();
-
+    this.atualizaListaDepoisQueAdicionado();
   }
 
   listar(){
